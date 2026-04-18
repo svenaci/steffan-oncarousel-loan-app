@@ -1,15 +1,12 @@
-// src/server.ts
-import express from 'express';
+import express from "express";
+import applicationsRouter from "./routes/applications";
 
-const app = express();
-const PORT = 3001;
+export const app = express();
 
 app.use(express.json());
 
-app.get('/health', (_, res) => {
-  res.json({ status: 'ok' });
+app.get("/health", (_, res) => {
+  res.json({ status: "ok" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.use("/applications", applicationsRouter);
