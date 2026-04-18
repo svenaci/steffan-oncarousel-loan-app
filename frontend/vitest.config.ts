@@ -5,7 +5,6 @@ export default defineConfig({
     include: [
       "../shared/**/*.test.ts",
       "./**/*.test.ts",
-      "../backend/src/**/*.test.ts"
     ]
   }
 });

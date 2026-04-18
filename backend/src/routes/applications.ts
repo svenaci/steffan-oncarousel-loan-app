@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { Router } from "express";
 import { validateLoanApplication } from "../../../shared/validation";
 import { LoanApplication, LoanApplicationInput } from "../../../shared/types";
-import { saveApplication } from "../store";
+import { saveApplication, getApplicationById } from "../store";
 
 const router = Router();
 
@@ -33,6 +33,22 @@ router.post("/", (req, res) => {
     id: application.id,
     status: application.status,
   });
+});
+
+router.get("/:id", (req, res) => {
+  const application = getApplicationById(req.params.id);
+
+  if (!application) {
+    return res.status(404).json({
+      error: {
+        code: "APPLICATION_NOT_FOUND",
+        message: "Application not found",
+        status: 404,
+      },
+    });
+  }
+
+  return res.status(200).json(application);
 });
 
 export default router;

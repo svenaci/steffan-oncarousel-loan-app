@@ -71,3 +71,39 @@ describe("POST /applications", () => {
     expect(response.body.status).toBe("pending");
   });
 });
+
+describe("GET /applications/:id", () => {
+  const validPayload = {
+    fullName: "John Doe",
+    email: "john@example.com",
+    annualIncome: 100000,
+    loanAmount: 300000,
+  };
+
+  beforeEach(() => {
+    clearApplications();
+  });
+
+  it("returns an existing application", async () => {
+    const createResponse = await request(app).post("/applications").send(validPayload);
+
+    const response = await request(app).get(`/applications/${createResponse.body.id}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.id).toBe(createResponse.body.id);
+    expect(response.body.status).toBe("pending");
+    expect(response.body.fullName).toBe(validPayload.fullName);
+    expect(response.body.email).toBe(validPayload.email);
+    expect(response.body.annualIncome).toBe(validPayload.annualIncome);
+    expect(response.body.loanAmount).toBe(validPayload.loanAmount);
+  });
+
+  it("returns 404 for an unknown application id", async () => {
+    const response = await request(app).get("/applications/unknownID");
+
+    expect(response.status).toBe(404);
+    expect(response.body.error.code).toBe("APPLICATION_NOT_FOUND");
+    expect(response.body.error.message).toBe("Application not found");
+    expect(response.body.error.status).toBe(404);
+  });
+});
