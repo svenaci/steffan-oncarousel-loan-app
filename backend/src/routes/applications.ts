@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { Router } from "express";
-import { validateLoanApplication } from "../../../shared/validation";
-import { LoanApplication, LoanApplicationInput } from "../../../shared/types";
+import { validateLoanApplication } from "../lib/validation";
+import { LoanApplication, LoanApplicationInput } from "../lib/types";
 import { saveApplication, getApplicationById } from "../store";
 
 const router = Router();

@@ -1,4 +1,4 @@
-import { LoanApplication } from "../../shared/types";
+import { LoanApplication } from "./lib/types";
 
 const applications = new Map<string, LoanApplication>();
 
