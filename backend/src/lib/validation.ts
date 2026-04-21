@@ -14,6 +14,8 @@ const validateBasicLoanApplicationFields = (input: LoanApplicationInput): FieldE
     errors.fullName = "Full name must be a valid string";
   } else if (fullName.trim().length === 0) {
     errors.fullName = "Full name is required";
+  } else if (!/^[a-zA-Z\s]+$/.test(fullName)) {
+    errors.fullName = "Full name must be valid characters only only letters";
   }
 
   if (typeof email !== "string") {
